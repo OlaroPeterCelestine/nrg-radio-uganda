@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NRG Radio Uganda - Next.js Website
 
-## Getting Started
+A modern, responsive website for NRG Radio Uganda built with Next.js 15, React, and Tailwind CSS.
 
-First, run the development server:
+## 🚀 Features
 
+- **Responsive Design**: Mobile-first approach with Tailwind CSS
+- **Interactive Player**: Draggable and resizable live audio/video player
+- **News Section**: Dynamic news articles with image optimization
+- **Events Page**: Event listings with filtering and search
+- **Merchandise Shop**: Product catalog with categories
+- **Contact Page**: Contact information and form
+- **Mobile Drawer**: Slide-out navigation for mobile devices
+- **Chatbot**: Interactive chat widget
+- **Image Optimization**: Next.js Image component with external domain support
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Icons**: Font Awesome
+- **Analytics**: Vercel Analytics
+
+## 📦 Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/OlaroPeterCelestine/nrg-radio-uganda.git
+cd nrg-radio-uganda
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Run the development server:
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Learn More
+## 🏗️ Build for Production
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run build
+npm start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📱 Pages
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Home** (`/`): Hero section with main story, minor stories, and videos
+- **News** (`/news`): News articles with social sidebar
+- **Events** (`/events`): Event listings and details
+- **Shop** (`/shop`): Merchandise catalog
+- **Contact** (`/contact`): Contact information and form
 
-## Deploy on Vercel
+## 🎨 Components
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Header**: Responsive navigation with mobile drawer
+- **Footer**: Site footer with links and social media
+- **Player**: Interactive audio/video player
+- **Chatbot**: Chat widget for user interaction
+- **OnAirCarousel**: Radio show carousel
+- **EventsSection**: Event grid component
+- **VoupSection**: Merchandise section
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🔧 Configuration
+
+The website is configured to load images from multiple external domains. See `next.config.js` for the complete list of allowed image sources.
+
+## 📄 License
+
+This project is proprietary to NRG Radio Uganda.
+
+## 🤝 Contributing
+
+This is a private project. For any issues or suggestions, please contact the development team.
+
+---
+
+Built with ❤️ for NRG Radio Uganda
