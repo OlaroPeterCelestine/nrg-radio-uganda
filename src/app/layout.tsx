@@ -10,7 +10,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'NRG Radio Uganda - 106.5 FM',
+  title: 'NRG Radio Uganda',
   description: 'The Number one name in music - Live from Nakasero, Kampala',
   keywords: 'radio, music, uganda, kampala, nrg, 106.5, entertainment',
 }
@@ -25,9 +25,8 @@ export default function RootLayout({
       <head>
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-        <link href="https://fonts.cdnfonts.com/css/headingnowtrial18heavy" rel="stylesheet" />
       </head>
-      <body className={`${inter.variable} font-sans relative bg-black text-white`}>
+      <body className={`${inter.variable} font-sans relative bg-black text-white`} suppressHydrationWarning>
         {children}
         <Analytics />
       </body>

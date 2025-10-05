@@ -20,6 +20,79 @@
     scrollbar-width: none; /* Firefox */
   }
 
+  /* Clean Shimmer Effects */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(240, 240, 240, 0.2) 0%,
+      rgba(240, 240, 240, 0.5) 20%,
+      rgba(240, 240, 240, 0.8) 50%,
+      rgba(240, 240, 240, 0.5) 80%,
+      rgba(240, 240, 240, 0.2) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s ease-in-out infinite;
+    border-radius: 8px;
+  }
+
+  .shimmer-dark {
+    background: linear-gradient(
+      90deg,
+      rgba(55, 65, 81, 0.3) 0%,
+      rgba(75, 85, 99, 0.6) 20%,
+      rgba(107, 114, 128, 0.8) 50%,
+      rgba(75, 85, 99, 0.6) 80%,
+      rgba(55, 65, 81, 0.3) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s ease-in-out infinite;
+    border-radius: 8px;
+  }
+
+  .shimmer-red {
+    background: linear-gradient(
+      90deg,
+      rgba(220, 38, 38, 0.1) 0%,
+      rgba(220, 38, 38, 0.3) 20%,
+      rgba(220, 38, 38, 0.5) 50%,
+      rgba(220, 38, 38, 0.3) 80%,
+      rgba(220, 38, 38, 0.1) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s ease-in-out infinite;
+    border-radius: 8px;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  /* Skeleton Loading States */
+  .skeleton-text {
+    @apply shimmer-dark h-4 rounded;
+  }
+
+  .skeleton-title {
+    @apply shimmer-dark h-6 rounded;
+  }
+
+  .skeleton-heading {
+    @apply shimmer-dark h-8 rounded;
+  }
+
+  .skeleton-image {
+    @apply shimmer-dark rounded-lg;
+  }
+
+  .skeleton-card {
+    @apply shimmer-dark rounded-lg p-4;
+  }
+
   .vertical-text {
     writing-mode: vertical-rl;
     text-orientation: mixed;

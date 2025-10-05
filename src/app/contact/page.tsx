@@ -3,232 +3,219 @@
 import { useState } from 'react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import Chatbot from '@/components/Chatbot'
-import Player from '@/components/Player'
 
 export default function ContactPage() {
-  const [players, setPlayers] = useState<Array<{ id: string; type: 'listen' | 'watch' }>>([])
+  const [formData, setFormData] = useState({
+    purpose: '',
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [message, setMessage] = useState('')
+  const [isSuccess, setIsSuccess] = useState(false)
 
-  const createPlayer = (type: 'listen' | 'watch') => {
-    const id = `player_${Date.now()}`
-    setPlayers(prev => [...prev, { id, type }])
+  const purposeOptions = [
+    'General Inquiry',
+    'Partnership',
+    'Event Booking',
+    'Music Submission',
+    'Advertising',
+    'Technical Support',
+    'Feedback',
+    'Other'
+  ]
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
   }
 
-  const removePlayer = (id: string) => {
-    setPlayers(prev => prev.filter(player => player.id !== id))
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    if (!formData.purpose || !formData.name || !formData.email || !formData.subject || !formData.message) {
+      setMessage('Please fill in all fields')
+      setIsSuccess(false)
+      return
+    }
+
+    setIsSubmitting(true)
+    setMessage('')
+
+    try {
+      const response = await fetch('https://nrgug-api-production.up.railway.app/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (response.ok) {
+        setMessage('Thank you for your message! We will get back to you soon.')
+        setIsSuccess(true)
+        setFormData({ purpose: '', name: '', email: '', subject: '', message: '' })
+      } else {
+        setMessage('Something went wrong. Please try again.')
+        setIsSuccess(false)
+      }
+    } catch (error) {
+      console.error('Error submitting contact form:', error)
+      setMessage('Network error. Please try again.')
+      setIsSuccess(false)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
+
   return (
-    <div className="relative bg-black text-white">
-      <Header createPlayer={createPlayer} />
+    <div className="relative bg-black text-white min-h-screen">
+      <Header createPlayer={() => {}} />
       
-      <main className="pt-32">
-        {/* Hero Section */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold mb-4">Get In Touch</h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              We'd love to hear from you. Send us a message and we'll respond as soon as possible.
-            </p>
+      <main className="pt-32 pb-20">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h1 className="text-5xl font-bold mb-6">Get in Touch</h1>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Contact Form */}
-            <div className="bg-gray-900 rounded-xl p-8">
-              <h2 className="text-2xl font-bold mb-6">Send us a message</h2>
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-300 mb-2">
-                      First Name
-                    </label>
-                    <input
-                      type="text"
-                      id="firstName"
-                      name="firstName"
-                      className="w-full bg-gray-800 text-white p-3 border border-gray-700 rounded-md outline-none focus:ring-2 focus:ring-red-500 transition-smooth"
-                      placeholder="Your first name"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-300 mb-2">
-                      Last Name
-                    </label>
-                    <input
-                      type="text"
-                      id="lastName"
-                      name="lastName"
-                      className="w-full bg-gray-800 text-white p-3 border border-gray-700 rounded-md outline-none focus:ring-2 focus:ring-red-500 transition-smooth"
-                      placeholder="Your last name"
-                    />
-                  </div>
-                </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            <div>
+              <form onSubmit={handleSubmit} className="space-y-8">
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                    Email Address
-                  </label>
+                  <label htmlFor="purpose" className="block text-sm font-medium mb-3">Purpose of reaching out?</label>
+                  <select
+                    id="purpose"
+                    name="purpose"
+                    value={formData.purpose}
+                    onChange={handleInputChange}
+                    required
+                    disabled={isSubmitting}
+                    className="w-full bg-gray-800 text-white p-3 rounded border border-gray-700 focus:ring-2 focus:ring-red-500 disabled:opacity-50"
+                  >
+                    <option value="">Select Purpose</option>
+                    {purposeOptions.map((option) => (
+                      <option key={option} value={option}>{option}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium mb-3">Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    disabled={isSubmitting}
+                    placeholder="Your Name"
+                    className="w-full bg-gray-800 text-white p-3 rounded border border-gray-700 focus:ring-2 focus:ring-red-500 disabled:opacity-50"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium mb-3">Email</label>
                   <input
                     type="email"
                     id="email"
                     name="email"
-                    className="w-full bg-gray-800 text-white p-3 border border-gray-700 rounded-md outline-none focus:ring-2 focus:ring-red-500 transition-smooth"
-                    placeholder="your.email@example.com"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                    disabled={isSubmitting}
+                    placeholder="Your Email"
+                    className="w-full bg-gray-800 text-white p-3 rounded border border-gray-700 focus:ring-2 focus:ring-red-500 disabled:opacity-50"
                   />
                 </div>
+
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2">
-                    Phone Number
-                  </label>
+                  <label htmlFor="subject" className="block text-sm font-medium mb-3">Subject</label>
                   <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    className="w-full bg-gray-800 text-white p-3 border border-gray-700 rounded-md outline-none focus:ring-2 focus:ring-red-500 transition-smooth"
-                    placeholder="+256 XXX XXX XXX"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
-                    Subject
-                  </label>
-                  <select
+                    type="text"
                     id="subject"
                     name="subject"
-                    className="w-full bg-gray-800 text-white p-3 border border-gray-700 rounded-md outline-none focus:ring-2 focus:ring-red-500 transition-smooth"
-                  >
-                    <option value="">Select a subject</option>
-                    <option value="music-submission">Music Submission</option>
-                    <option value="event-booking">Event Booking</option>
-                    <option value="partnership">Partnership</option>
-                    <option value="general-inquiry">General Inquiry</option>
-                    <option value="feedback">Feedback</option>
-                  </select>
+                    value={formData.subject}
+                    onChange={handleInputChange}
+                    required
+                    disabled={isSubmitting}
+                    placeholder="Subject"
+                    className="w-full bg-gray-800 text-white p-3 rounded border border-gray-700 focus:ring-2 focus:ring-red-500 disabled:opacity-50"
+                  />
                 </div>
+
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                    Message
-                  </label>
+                  <label htmlFor="message" className="block text-sm font-medium mb-3">Message</label>
                   <textarea
                     id="message"
                     name="message"
-                    rows={6}
-                    className="w-full bg-gray-800 text-white p-3 border border-gray-700 rounded-md outline-none focus:ring-2 focus:ring-red-500 transition-smooth resize-none"
-                    placeholder="Tell us what's on your mind..."
-                  ></textarea>
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    required
+                    disabled={isSubmitting}
+                    rows={4}
+                    placeholder="Your Message"
+                    className="w-full bg-gray-800 text-white p-3 rounded border border-gray-700 focus:ring-2 focus:ring-red-500 disabled:opacity-50"
+                  />
                 </div>
+
                 <button
                   type="submit"
-                  className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-md transition-colors"
+                  disabled={isSubmitting}
+                  className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded transition-colors disabled:opacity-50"
                 >
-                  Send Message
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
+
+                {message && (
+                  <div className={`p-3 rounded ${
+                    isSuccess ? 'bg-green-900 text-green-300' : 'bg-red-900 text-red-300'
+                  }`}>
+                    {message}
+                  </div>
+                )}
               </form>
             </div>
 
-            {/* Contact Information */}
-            <div className="space-y-8">
-              <div className="bg-gray-900 rounded-xl p-8">
-                <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
-                <div className="space-y-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-red-600 p-3 rounded-lg">
-                      <i className="fas fa-map-marker-alt text-white text-xl"></i>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-white mb-1">Address</h3>
-                      <p className="text-gray-300">
-                        Clement Hill Road<br />
-                        Kampala, Uganda
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-red-600 p-3 rounded-lg">
-                      <i className="fas fa-phone text-white text-xl"></i>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-white mb-1">Phone</h3>
-                      <p className="text-gray-300">+256 771 751454</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-red-600 p-3 rounded-lg">
-                      <i className="fas fa-envelope text-white text-xl"></i>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-white mb-1">Email</h3>
-                      <p className="text-gray-300">info@106.5nrgradio.ug</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-red-600 p-3 rounded-lg">
-                      <i className="fas fa-clock text-white text-xl"></i>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-white mb-1">Office Hours</h3>
-                      <p className="text-gray-300">
-                        Monday - Friday: 8:00 AM - 6:00 PM<br />
-                        Saturday: 9:00 AM - 4:00 PM<br />
-                        Sunday: Closed
-                      </p>
-                    </div>
-                  </div>
-                </div>
+            <div>
+              <h2 className="text-3xl font-bold mb-8">Find Us</h2>
+              <div className="bg-gray-800 rounded-lg p-6 mb-8">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.7500!2d32.5825!3d0.3163!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177db8b8b8b8b8b8%3A0x8b8b8b8b8b8b8b8b!2sClement%20Hill%20Road%2C%20Kampala%2C%20Uganda!5e0!3m2!1sen!2sug!4v1234567890"
+                  width="100%"
+                  height="300"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="rounded"
+                ></iframe>
               </div>
-
-              {/* Social Media */}
-              <div className="bg-gray-900 rounded-xl p-8">
-                <h2 className="text-2xl font-bold mb-6">Follow Us</h2>
-                <div className="flex space-x-4">
-                  <a
-                    href="#"
-                    className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg transition-colors"
-                  >
-                    <i className="fab fa-facebook-f text-xl"></i>
-                  </a>
-                  <a
-                    href="#"
-                    className="bg-sky-400 hover:bg-sky-500 text-white p-3 rounded-lg transition-colors"
-                  >
-                    <i className="fab fa-twitter text-xl"></i>
-                  </a>
-                  <a
-                    href="#"
-                    className="bg-pink-500 hover:bg-pink-600 text-white p-3 rounded-lg transition-colors"
-                  >
-                    <i className="fab fa-instagram text-xl"></i>
-                  </a>
-                  <a
-                    href="#"
-                    className="bg-red-600 hover:bg-red-700 text-white p-3 rounded-lg transition-colors"
-                  >
-                    <i className="fab fa-youtube text-xl"></i>
-                  </a>
-                  <a
-                    href="#"
-                    className="bg-purple-600 hover:bg-purple-700 text-white p-3 rounded-lg transition-colors"
-                  >
-                    <i className="fab fa-tiktok text-xl"></i>
-                  </a>
+              
+              <div className="space-y-6">
+                <div>
+                  <h3 className="font-semibold text-lg mb-2">Address</h3>
+                  <p className="text-gray-300">Clement Hill Road, Kampala, Uganda</p>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg mb-2">Phone</h3>
+                  <p className="text-gray-300">+256 771 751454</p>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg mb-2">Email</h3>
+                  <p className="text-gray-300">info@106.5nrgradio.ug</p>
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </div>
       </main>
 
-      {/* Container for floating players */}
-      <div id="playerContainer" className="fixed inset-0 pointer-events-none">
-        {players.map(player => (
-          <Player
-            key={player.id}
-            type={player.type}
-            id={player.id}
-            removePlayer={removePlayer}
-          />
-        ))}
-      </div>
-
-      <Chatbot />
       <Footer />
     </div>
   )

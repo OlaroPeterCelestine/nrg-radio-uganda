@@ -138,6 +138,7 @@ export default function Header({ createPlayer }: HeaderProps) {
                 className="h-10 w-auto"
                 width={120}
                 height={40}
+                style={{ height: "auto" }}
               />
             </a>
           </div>
@@ -300,6 +301,7 @@ export default function Header({ createPlayer }: HeaderProps) {
                         className="h-10 w-auto"
                         width={120}
                         height={40}
+                        style={{ height: "auto" }}
                       />
                     </a>
                   </div>
