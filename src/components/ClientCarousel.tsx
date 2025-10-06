@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 interface Client {
   id: number
@@ -84,9 +85,12 @@ export default function ClientCarousel() {
       <div className="max-w-7xl mx-auto">
         <header className="flex justify-between items-center mb-8">
           <h2 className="text-3xl font-bold">Clientele</h2>
-          <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition">
-            See More
-          </button>
+          <Link 
+            href="/clients"
+            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition"
+          >
+            View More
+          </Link>
         </header>
 
         {clients.length === 0 ? (

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 interface Show {
   id: number
@@ -90,9 +91,12 @@ export default function OnAirCarousel() {
     <section className="text-white py-6 px-4 w-full mt-8">
       <header className="flex justify-between items-center mb-6 max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold">On Air</h1>
-        <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition">
-          View Schedule
-        </button>
+        <Link 
+          href="/shows"
+          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition"
+        >
+          View More
+        </Link>
       </header>
 
       <div className="max-w-7xl mx-auto">
