@@ -426,6 +426,35 @@ export default function Home() {
             </div>
         </section>
 
+        {/* Watch/Listen CTA Row */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+          <div className="w-full flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <button
+              onClick={() => router.push('/shows')}
+              className="flex-1 sm:flex-none sm:w-auto inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+              type="button"
+            >
+              <i className="fas fa-tv"></i>
+              Watch Live
+            </button>
+
+            <button
+              onClick={() => {
+                try {
+                  const audio = document.querySelector('audio') as HTMLAudioElement | null
+                  audio?.play()?.catch(() => {})
+                  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
+                } catch {}
+              }}
+              className="flex-1 sm:flex-none sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-gray-900 hover:bg-gray-200 px-6 py-3 rounded-lg font-semibold transition-colors"
+              type="button"
+            >
+              <i className="fas fa-play"></i>
+              Listen Live
+            </button>
+          </div>
+        </section>
+
         {/* Client Carousel */}
         <ClientCarousel />
 
