@@ -5,6 +5,7 @@
 @layer base {
   body {
     font-family: var(--font-inter), "Inter", sans-serif;
+    padding-bottom: 80px; /* Space for always-visible bottom player */
   }
 }
 

@@ -4,11 +4,11 @@ import { usePlayer } from '@/contexts/PlayerContext'
 import BottomStickyPlayer from './BottomStickyPlayer'
 
 export default function PlayerWrapper() {
-  const { isPlayerVisible, hidePlayer, minimizePlayer } = usePlayer()
+  const { hidePlayer, minimizePlayer } = usePlayer()
 
   return (
     <BottomStickyPlayer
-      isVisible={isPlayerVisible}
+      isVisible={true}
       onClose={hidePlayer}
       onMinimize={minimizePlayer}
     />
