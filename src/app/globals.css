@@ -5,12 +5,12 @@
 @layer base {
   body {
     font-family: var(--font-inter), "Inter", sans-serif;
-    padding-right: 80px; /* Space for collapsed right-side player */
+    padding-bottom: 80px; /* Space for bottom sticky player */
   }
   
   @media (min-width: 640px) {
     body {
-      padding-right: 80px; /* Space for collapsed right-side player */
+      padding-bottom: 100px; /* Space for bottom sticky player on desktop */
     }
   }
 }
