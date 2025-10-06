@@ -87,8 +87,8 @@ export default function BottomStickyPlayer({ isVisible }: BottomStickyPlayerProp
           </div>
 
           {/* Track Info */}
-          <div className="flex-1 min-w-0 mr-2 sm:mr-4">
-            <div className="flex items-center mb-1">
+          <div className="flex-1 min-w-0 mr-2 sm:mr-4 lg:ml-8">
+            <div className="flex items-center mb-1 lg:ml-2">
               <div className={`mr-1 sm:mr-2 transition-all duration-300 ${
                 isExpanded ? 'w-4 h-4 sm:w-5 sm:h-5' : 'w-3 h-3 sm:w-4 sm:h-4'
               }`}>
