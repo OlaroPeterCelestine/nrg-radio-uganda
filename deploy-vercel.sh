@@ -36,7 +36,7 @@ fi
 echo -e "${BLUE}Deploying to Vercel...${NC}"
 
 # Deploy to Vercel
-vercel --prod
+vercel --prod --yes
 
 echo -e "${GREEN}🎉 Deployment completed!${NC}"
 echo -e "${BLUE}Your website is now live on Vercel!${NC}"

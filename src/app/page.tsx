@@ -336,7 +336,10 @@ export default function Home() {
                       <h2 className="text-3xl font-bold mb-4">
                         {heroNews[0].title}
                       </h2>
-                      <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition-colors">
+                      <button 
+                        onClick={() => window.location.href = `/news/${heroNews[0].id}`}
+                        className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition-colors"
+                      >
                         Read More
                       </button>
                     </div>
@@ -365,7 +368,10 @@ export default function Home() {
                       <h3 className="text-xs lg:text-sm font-bold mb-2">
                         {heroNews[1].title}
                       </h3>
-                      <button className="text-xs bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded transition-colors">
+                      <button 
+                        onClick={() => window.location.href = `/news/${heroNews[1].id}`}
+                        className="text-xs bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded transition-colors"
+                      >
                         Read More
                       </button>
                     </div>
@@ -390,7 +396,10 @@ export default function Home() {
                       <h3 className="text-xs lg:text-sm font-bold mb-2">
                         {heroNews[2].title}
                       </h3>
-                      <button className="text-xs bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded transition-colors">
+                      <button 
+                        onClick={() => window.location.href = `/news/${heroNews[2].id}`}
+                        className="text-xs bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded transition-colors"
+                      >
                         Read More
                       </button>
                     </div>
