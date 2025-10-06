@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { Analytics } from '@vercel/analytics/react'
+import { PlayerProvider } from '@/contexts/PlayerContext'
+import PlayerWrapper from '@/components/PlayerWrapper'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -27,7 +29,10 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
       </head>
       <body className={`${inter.variable} font-sans relative bg-black text-white`} suppressHydrationWarning>
-        {children}
+        <PlayerProvider>
+          {children}
+          <PlayerWrapper />
+        </PlayerProvider>
         <Analytics />
       </body>
     </html>
