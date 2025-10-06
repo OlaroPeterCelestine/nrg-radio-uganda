@@ -427,18 +427,11 @@ export default function Home() {
         </section>
 
         {/* Watch/Listen CTA Row */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-          <div className="w-full flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Listen Live Card */}
             <button
-              onClick={() => router.push('/shows')}
-              className="flex-1 sm:flex-none sm:w-auto inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
-              type="button"
-            >
-              <i className="fas fa-tv"></i>
-              Watch Live
-            </button>
-
-            <button
+              aria-label="Listen Live"
               onClick={() => {
                 try {
                   const audio = document.querySelector('audio') as HTMLAudioElement | null
@@ -446,11 +439,33 @@ export default function Home() {
                   window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
                 } catch {}
               }}
-              className="flex-1 sm:flex-none sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-gray-900 hover:bg-gray-200 px-6 py-3 rounded-lg font-semibold transition-colors"
+              className="group relative overflow-hidden rounded-2xl border border-gray-700/60 bg-black/20 hover:border-red-500/60 transition-colors px-8 py-10"
               type="button"
             >
-              <i className="fas fa-play"></i>
-              Listen Live
+              <div className="flex flex-col items-center justify-center gap-4">
+                {/* Waveform Icon */}
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-red-500">
+                  <path d="M4 15h2a1 1 0 0 0 1-1V6a1 1 0 1 1 2 0v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V9a1 1 0 1 1 2 0v8a1 1 0 0 0 1 1h2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span className="text-2xl font-bold tracking-tight">Listen Live</span>
+              </div>
+            </button>
+
+            {/* Watch Live Card */}
+            <button
+              aria-label="Watch Live"
+              onClick={() => router.push('/shows')}
+              className="group relative overflow-hidden rounded-2xl border border-gray-700/60 bg-black/20 hover:border-red-500/60 transition-colors px-8 py-10"
+              type="button"
+            >
+              <div className="flex flex-col items-center justify-center gap-4">
+                {/* Red Play Circle Icon */}
+                <svg width="46" height="46" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="24" cy="24" r="20" fill="#EF4444"/>
+                  <path d="M21 17l12 7-12 7V17z" fill="white"/>
+                </svg>
+                <span className="text-2xl font-bold tracking-tight">Watch Live</span>
+              </div>
             </button>
           </div>
         </section>
