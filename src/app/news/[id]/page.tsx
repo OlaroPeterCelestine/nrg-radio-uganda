@@ -38,23 +38,45 @@ export default function NewsStoryPage() {
 
   useEffect(() => {
     if (params.id) {
+      console.log('useEffect triggered with ID:', params.id)
       fetchNewsStory(params.id as string)
       fetchRelatedNews()
     }
   }, [params.id])
 
+  // Add a fallback to prevent infinite loading
+  useEffect(() => {
+    const fallbackTimer = setTimeout(() => {
+      if (loading && !article && !error) {
+        console.log('Fallback timer triggered - setting error')
+        setError('Loading is taking longer than expected. Please refresh the page.')
+        setLoading(false)
+      }
+    }, 15000) // 15 second fallback
+
+    return () => clearTimeout(fallbackTimer)
+  }, [loading, article, error])
+
   const fetchNewsStory = async (id: string) => {
     try {
       setLoading(true)
+      setError(null)
       console.log('Fetching news story with ID:', id) // Debug log
+      
+      // Add timeout to prevent hanging
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
+      
       const response = await fetch(`https://nrgug-api-production.up.railway.app/api/news/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
         mode: 'cors',
+        signal: controller.signal
       })
 
+      clearTimeout(timeoutId)
       console.log('Response status:', response.status) // Debug log
       
       if (response.ok) {
@@ -66,11 +88,15 @@ export default function NewsStoryPage() {
       } else {
         const errorText = await response.text()
         console.error('Failed to fetch article:', response.status, response.statusText, errorText)
-        setError('News story not found')
+        setError(`News story not found (${response.status})`)
       }
     } catch (error) {
       console.error('Error fetching news story:', error)
-      setError('Failed to load news story')
+      if (error.name === 'AbortError') {
+        setError('Request timed out. Please try again.')
+      } else {
+        setError('Failed to load news story. Please check your connection.')
+      }
     } finally {
       setLoading(false)
     }
@@ -163,14 +189,31 @@ export default function NewsStoryPage() {
             <div className="bg-gray-900/30 rounded-2xl p-12 border border-gray-800/50">
               <div className="text-6xl mb-6">📰</div>
               <h1 className="text-4xl font-bold mb-4 text-white">Story Not Found</h1>
-              <p className="text-gray-300 mb-8 text-lg">The news story you're looking for doesn't exist or may have been removed.</p>
-              <button 
-                onClick={() => router.push('/news')}
-                className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-8 py-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
-              >
-                <i className="fas fa-arrow-left mr-2"></i>
-                Back to News
-              </button>
+              <p className="text-gray-300 mb-8 text-lg">
+                {error || "The news story you're looking for doesn't exist or may have been removed."}
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button 
+                  onClick={() => router.push('/news')}
+                  className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-8 py-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+                >
+                  <i className="fas fa-arrow-left mr-2"></i>
+                  Back to News
+                </button>
+                <button 
+                  onClick={() => {
+                    if (params.id) {
+                      setError(null)
+                      setLoading(true)
+                      fetchNewsStory(params.id as string)
+                    }
+                  }}
+                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+                >
+                  <i className="fas fa-refresh mr-2"></i>
+                  Try Again
+                </button>
+              </div>
             </div>
           </div>
         </div>
