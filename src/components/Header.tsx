@@ -121,27 +121,34 @@ export default function Header({ createPlayer }: HeaderProps) {
           </ul>
 
 
-          {/* App Store Links - Desktop Only */}
+          {/* Live Actions - Desktop */}
           <div className="hidden md:flex items-center gap-3 ml-6">
-            <a href="#" target="_blank" className="block hover:scale-105 transition-transform duration-200">
-              <Image
-                src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
-                alt="Download on the App Store"
-                className="h-10 w-auto"
-                width={120}
-                height={40}
-              />
-            </a>
-            <a href="#" target="_blank" className="block hover:scale-105 transition-transform duration-200">
-              <Image
-                src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
-                alt="Get it on Google Play"
-                className="h-10 w-auto"
-                width={120}
-                height={40}
-                style={{ height: "auto" }}
-              />
-            </a>
+            <button
+              onClick={() => {
+                try {
+                  const audio = document.querySelector('audio') as HTMLAudioElement | null
+                  audio?.play()?.catch(() => {})
+                  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
+                } catch {}
+              }}
+              className="inline-flex items-center gap-2 bg-white text-gray-900 hover:bg-gray-200 px-4 py-2 rounded-lg font-semibold transition-colors"
+              type="button"
+            >
+              <svg className="w-4 h-4 text-red-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 15h2a1 1 0 0 0 1-1V6a1 1 0 1 1 2 0v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V9a1 1 0 1 1 2 0v8a1 1 0 0 0 1 1h2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              Listen Live
+            </button>
+
+            <Link
+              href="/shows"
+              className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              Watch Live
+            </Link>
           </div>
 
           {/* Mobile Toggle */}
@@ -283,29 +290,36 @@ export default function Header({ createPlayer }: HeaderProps) {
                   </Link>
                 </li>
                 
-                {/* App Store Links - Immediately under Get In Touch */}
-                <li className="px-4 py-3">
-                  <div className="space-y-3">
-                    <a href="#" target="_blank" className="block hover:scale-105 transition-transform duration-200" onClick={closeMobileMenu}>
-                      <Image
-                        src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
-                        alt="Download on the App Store"
-                        className="h-10 w-auto"
-                        width={120}
-                        height={40}
-                      />
-                    </a>
-                    <a href="#" target="_blank" className="block hover:scale-105 transition-transform duration-200" onClick={closeMobileMenu}>
-                      <Image
-                        src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
-                        alt="Get it on Google Play"
-                        className="h-10 w-auto"
-                        width={120}
-                        height={40}
-                        style={{ height: "auto" }}
-                      />
-                    </a>
-                  </div>
+                {/* Live Actions - Mobile */}
+                <li>
+                  <button
+                    onClick={() => {
+                      try {
+                        const audio = document.querySelector('audio') as HTMLAudioElement | null
+                        audio?.play()?.catch(() => {})
+                      } catch {}
+                      closeMobileMenu()
+                    }}
+                    className="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-900 rounded-lg transition-colors w-full text-left"
+                    type="button"
+                  >
+                    <svg className="w-5 h-5 mr-3 text-red-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4 15h2a1 1 0 0 0 1-1V6a1 1 0 1 1 2 0v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V9a1 1 0 1 1 2 0v8a1 1 0 0 0 1 1h2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    Listen Live
+                  </button>
+                </li>
+                <li>
+                  <Link
+                    href="/shows"
+                    onClick={closeMobileMenu}
+                    className="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-900 rounded-lg transition-colors"
+                  >
+                    <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    Watch Live
+                  </Link>
                 </li>
               </ul>
             </nav>
