@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -22,6 +23,7 @@ interface NewsArticle {
 }
 
 export default function Home() {
+  const router = useRouter()
   const [players, setPlayers] = useState<Array<{ id: string; type: 'listen' | 'watch' }>>([])
   const [loading, setLoading] = useState(true)
   const [heroNews, setHeroNews] = useState<NewsArticle[]>([
@@ -337,7 +339,7 @@ export default function Home() {
                         {heroNews[0].title}
                       </h2>
                       <button 
-                        onClick={() => window.location.href = `/news/${heroNews[0].id}`}
+                        onClick={() => router.push(`/news/${heroNews[0].id}`)}
                         className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition-colors"
                       >
                         Read More
@@ -369,7 +371,7 @@ export default function Home() {
                         {heroNews[1].title}
                       </h3>
                       <button 
-                        onClick={() => window.location.href = `/news/${heroNews[1].id}`}
+                        onClick={() => router.push(`/news/${heroNews[1].id}`)}
                         className="text-xs bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded transition-colors"
                       >
                         Read More
@@ -397,7 +399,7 @@ export default function Home() {
                         {heroNews[2].title}
                       </h3>
                       <button 
-                        onClick={() => window.location.href = `/news/${heroNews[2].id}`}
+                        onClick={() => router.push(`/news/${heroNews[2].id}`)}
                         className="text-xs bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded transition-colors"
                       >
                         Read More

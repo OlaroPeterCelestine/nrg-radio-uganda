@@ -62,6 +62,7 @@ export default function NewsStoryPage() {
         console.log('Fetched article data:', data) // Debug log
         console.log('Story content:', data.story) // Debug log
         setArticle(data)
+        setError(null) // Clear any previous errors
       } else {
         const errorText = await response.text()
         console.error('Failed to fetch article:', response.status, response.statusText, errorText)
