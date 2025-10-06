@@ -151,6 +151,36 @@ export default function Header({ createPlayer }: HeaderProps) {
             </Link>
           </div>
 
+          {/* Mobile Live Actions */}
+          <div className="md:hidden flex items-center gap-2 mr-2">
+            <button
+              onClick={() => {
+                try {
+                  const audio = document.querySelector('audio') as HTMLAudioElement | null
+                  audio?.play()?.catch(() => {})
+                  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
+                } catch {}
+              }}
+              className="inline-flex items-center gap-1 bg-white text-gray-900 hover:bg-gray-200 px-2 py-1 rounded text-xs font-semibold transition-colors"
+              type="button"
+            >
+              <svg className="w-3 h-3 text-red-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 15h2a1 1 0 0 0 1-1V6a1 1 0 1 1 2 0v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V9a1 1 0 1 1 2 0v8a1 1 0 0 0 1 1h2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              Listen
+            </button>
+
+            <Link
+              href="/shows"
+              className="inline-flex items-center gap-1 bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-xs font-semibold transition-colors"
+            >
+              <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              Watch
+            </Link>
+          </div>
+
           {/* Mobile Toggle */}
           <button
             id="menu-toggle"
@@ -291,36 +321,6 @@ export default function Header({ createPlayer }: HeaderProps) {
                 </li>
                 
                 {/* Live Actions - Mobile */}
-                <li>
-                  <button
-                    onClick={() => {
-                      try {
-                        const audio = document.querySelector('audio') as HTMLAudioElement | null
-                        audio?.play()?.catch(() => {})
-                      } catch {}
-                      closeMobileMenu()
-                    }}
-                    className="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-900 rounded-lg transition-colors w-full text-left"
-                    type="button"
-                  >
-                    <svg className="w-5 h-5 mr-3 text-red-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M4 15h2a1 1 0 0 0 1-1V6a1 1 0 1 1 2 0v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V9a1 1 0 1 1 2 0v8a1 1 0 0 0 1 1h2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    Listen Live
-                  </button>
-                </li>
-                <li>
-                  <Link
-                    href="/shows"
-                    onClick={closeMobileMenu}
-                    className="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-900 rounded-lg transition-colors"
-                  >
-                    <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M8 5v14l11-7z"/>
-                    </svg>
-                    Watch Live
-                  </Link>
-                </li>
               </ul>
             </nav>
 
