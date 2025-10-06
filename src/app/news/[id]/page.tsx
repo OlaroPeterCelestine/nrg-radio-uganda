@@ -92,7 +92,7 @@ export default function NewsStoryPage() {
       }
     } catch (error) {
       console.error('Error fetching news story:', error)
-      if (error.name === 'AbortError') {
+      if (error instanceof Error && error.name === 'AbortError') {
         setError('Request timed out. Please try again.')
       } else {
         setError('Failed to load news story. Please check your connection.')
