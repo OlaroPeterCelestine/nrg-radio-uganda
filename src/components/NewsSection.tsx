@@ -100,7 +100,7 @@ export default function NewsSection() {
             <p className="text-gray-500">Check back later for the latest updates</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {articles.map((article) => (
               <article
                 key={article.id}
