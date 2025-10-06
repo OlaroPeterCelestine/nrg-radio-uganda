@@ -4,11 +4,9 @@ import { useState, useRef, useEffect } from 'react'
 
 interface BottomStickyPlayerProps {
   isVisible: boolean
-  onClose: () => void
-  onMinimize: () => void
 }
 
-export default function BottomStickyPlayer({ isVisible, onClose, onMinimize }: BottomStickyPlayerProps) {
+export default function BottomStickyPlayer({ isVisible }: BottomStickyPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState('0:00')
   const [duration, setDuration] = useState('0:00')
@@ -42,17 +40,6 @@ export default function BottomStickyPlayer({ isVisible, onClose, onMinimize }: B
     }
   }
 
-  const handleRewind = () => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime - 15)
-    }
-  }
-
-  const handleForward = () => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = Math.min(audioRef.current.duration, audioRef.current.currentTime + 30)
-    }
-  }
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newVolume = parseInt(e.target.value)
@@ -106,18 +93,7 @@ export default function BottomStickyPlayer({ isVisible, onClose, onMinimize }: B
         </div>
 
         {/* Playback Controls */}
-        <div className="flex items-center space-x-4 mr-6">
-          {/* 15s Rewind */}
-          <button
-            onClick={handleRewind}
-            className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-colors"
-          >
-            <svg viewBox="0 0 24 24" fill="white" className="w-4 h-4">
-              <path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/>
-            </svg>
-            <span className="text-xs font-bold ml-1">15</span>
-          </button>
-
+        <div className="flex items-center mr-6">
           {/* Play/Pause */}
           <button
             onClick={togglePlayPause}
@@ -132,17 +108,6 @@ export default function BottomStickyPlayer({ isVisible, onClose, onMinimize }: B
                 <path d="M8 5v14l11-7z"/>
               </svg>
             )}
-          </button>
-
-          {/* 30s Forward */}
-          <button
-            onClick={handleForward}
-            className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-colors"
-          >
-            <svg viewBox="0 0 24 24" fill="white" className="w-4 h-4">
-              <path d="M13 6v12l8.5-6L13 6zM4 18l8.5-6L4 6v12z"/>
-            </svg>
-            <span className="text-xs font-bold ml-1">30</span>
           </button>
         </div>
 
@@ -176,25 +141,6 @@ export default function BottomStickyPlayer({ isVisible, onClose, onMinimize }: B
           />
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex items-center space-x-2">
-          <button
-            onClick={onMinimize}
-            className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-colors"
-          >
-            <svg viewBox="0 0 24 24" fill="white" className="w-4 h-4">
-              <path d="M19 13H5v-2h14v2z"/>
-            </svg>
-          </button>
-          <button
-            onClick={onClose}
-            className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-colors"
-          >
-            <svg viewBox="0 0 24 24" fill="white" className="w-4 h-4">
-              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-            </svg>
-          </button>
-        </div>
       </div>
 
       {/* Hidden Audio Element */}
@@ -224,3 +170,5 @@ export default function BottomStickyPlayer({ isVisible, onClose, onMinimize }: B
     </div>
   )
 }
+
+
