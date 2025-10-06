@@ -187,16 +187,16 @@ export default function Header({ createPlayer }: HeaderProps) {
 
         {/* Mobile Drawer */}
         <div
-          className={`fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-gray-900 transform transition-transform duration-300 ease-in-out z-50 md:hidden ${
+          className={`fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-black transform transition-transform duration-300 ease-in-out z-50 md:hidden ${
             isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
           {/* Drawer Header */}
-          <div className="flex items-center justify-between p-6 border-b border-gray-700">
+          <div className="flex items-center justify-between p-6 border-b border-gray-600">
             <h2 className="text-xl font-bold text-white">Menu</h2>
             <button
               onClick={closeMobileMenu}
-              className="text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-800 rounded-lg"
+              className="text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-900 rounded-lg"
               aria-label="Close menu"
             >
               <svg
@@ -224,7 +224,7 @@ export default function Header({ createPlayer }: HeaderProps) {
                 <li>
                   <Link
                     href="/"
-                    className="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+                    className="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-900 rounded-lg transition-colors"
                     onClick={closeMobileMenu}
                   >
                     <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -236,7 +236,7 @@ export default function Header({ createPlayer }: HeaderProps) {
                 <li>
                   <Link
                     href="/news"
-                    className="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+                    className="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-900 rounded-lg transition-colors"
                     onClick={closeMobileMenu}
                   >
                     <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -248,7 +248,7 @@ export default function Header({ createPlayer }: HeaderProps) {
                 <li>
                   <Link
                     href="/events"
-                    className="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+                    className="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-900 rounded-lg transition-colors"
                     onClick={closeMobileMenu}
                   >
                     <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -260,7 +260,7 @@ export default function Header({ createPlayer }: HeaderProps) {
                 <li>
                   <Link
                     href="/shop"
-                    className="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+                    className="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-900 rounded-lg transition-colors"
                     onClick={closeMobileMenu}
                   >
                     <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -272,7 +272,7 @@ export default function Header({ createPlayer }: HeaderProps) {
                 <li>
                   <Link
                     href="/contact"
-                    className="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+                    className="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-900 rounded-lg transition-colors"
                     onClick={closeMobileMenu}
                   >
                     <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
