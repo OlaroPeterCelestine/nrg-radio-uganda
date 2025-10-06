@@ -339,8 +339,12 @@ export default function Home() {
                         {heroNews[0].title}
                       </h2>
                       <button 
-                        onClick={() => router.push(`/news/${heroNews[0].id}`)}
-                        className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition-colors"
+                        onClick={() => {
+                          console.log('Main story Read More clicked, navigating to:', `/news/${heroNews[0].id}`)
+                          router.push(`/news/${heroNews[0].id}`)
+                        }}
+                        className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition-colors cursor-pointer z-10 relative"
+                        type="button"
                       >
                         Read More
                       </button>
@@ -371,8 +375,12 @@ export default function Home() {
                         {heroNews[1].title}
                       </h3>
                       <button 
-                        onClick={() => router.push(`/news/${heroNews[1].id}`)}
-                        className="text-xs bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded transition-colors"
+                        onClick={() => {
+                          console.log('Minor story 1 Read More clicked, navigating to:', `/news/${heroNews[1].id}`)
+                          router.push(`/news/${heroNews[1].id}`)
+                        }}
+                        className="text-xs bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded transition-colors cursor-pointer z-10 relative"
+                        type="button"
                       >
                         Read More
                       </button>
@@ -399,8 +407,12 @@ export default function Home() {
                         {heroNews[2].title}
                       </h3>
                       <button 
-                        onClick={() => router.push(`/news/${heroNews[2].id}`)}
-                        className="text-xs bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded transition-colors"
+                        onClick={() => {
+                          console.log('Minor story 2 Read More clicked, navigating to:', `/news/${heroNews[2].id}`)
+                          router.push(`/news/${heroNews[2].id}`)
+                        }}
+                        className="text-xs bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded transition-colors cursor-pointer z-10 relative"
+                        type="button"
                       >
                         Read More
                       </button>
