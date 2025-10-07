@@ -9,6 +9,9 @@ import Image from 'next/image'
 
 export default function EventsPage() {
   const [players, setPlayers] = useState<Array<{ id: string; type: 'listen' | 'watch' }>>([])
+  const [selectedCategory, setSelectedCategory] = useState("All")
+  const [searchTerm, setSearchTerm] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
   const createPlayer = (type: 'listen' | 'watch') => {
     const id = `player_${Date.now()}`
@@ -87,6 +90,31 @@ export default function EventsPage() {
     }
   ]
 
+  // Get unique categories from events
+  const categories = ["All", ...Array.from(new Set(events.map(event => event.category)))]
+
+  // Filter events based on category and search term
+  const filteredEvents = events.filter(event => {
+    const matchesCategory = selectedCategory === "All" || event.category === selectedCategory
+    const matchesSearch = event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         event.venue.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         event.category.toLowerCase().includes(searchTerm.toLowerCase())
+    return matchesCategory && matchesSearch
+  })
+
+  // Simulate loading state
+  const handleCategoryChange = (category: string) => {
+    setIsLoading(true)
+    setSelectedCategory(category)
+    setTimeout(() => setIsLoading(false), 300)
+  }
+
+  const handleSearchChange = (term: string) => {
+    setIsLoading(true)
+    setSearchTerm(term)
+    setTimeout(() => setIsLoading(false), 300)
+  }
+
   return (
     <div className="relative bg-black text-white">
       <Header createPlayer={createPlayer} />
@@ -102,16 +130,54 @@ export default function EventsPage() {
             </p>
           </div>
 
+          {/* Search Bar */}
+          <div className="max-w-md mx-auto mb-8">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search events..."
+                value={searchTerm}
+                onChange={(e) => handleSearchChange(e.target.value)}
+                className="w-full bg-gray-800 text-white p-4 pr-12 border border-gray-700 rounded-lg outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200"
+              />
+              <i className="fa-solid fa-search absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            </div>
+          </div>
+
+          {/* Category Filter */}
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => handleCategoryChange(category)}
+                disabled={isLoading}
+                className={`px-6 py-2 rounded-full font-semibold transition-all duration-200 ${
+                  category === selectedCategory
+                    ? "bg-red-600 text-white shadow-lg shadow-red-600/25"
+                    : "bg-gray-800 text-gray-300 hover:bg-gray-700 hover:scale-105"
+                } ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
           {/* Events Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {events.map((event) => (
+            {isLoading ? (
+              <div className="col-span-full text-center py-12">
+                <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
+                <p className="mt-4 text-gray-400">Loading events...</p>
+              </div>
+            ) : filteredEvents.length > 0 ? (
+              filteredEvents.map((event) => (
               <div
                 key={event.id}
-                className="bg-black border border-gray-800 rounded-xl shadow-md overflow-hidden flex flex-col hover:border-red-500 hover:-translate-y-1 transition-all"
+                className="bg-black border border-gray-800 rounded-xl shadow-md overflow-hidden flex flex-col hover:border-red-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-red-500/10 transition-all duration-300 group"
               >
                 <div className="relative">
                   <Image
-                    className="w-full h-48 object-cover"
+                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                     src={event.image}
                     alt={event.title}
                     width={400}
@@ -141,13 +207,20 @@ export default function EventsPage() {
                     <div className="flex items-center mr-auto">
                       <i className="fa-regular fa-eye mr-1"></i> {event.shares}
                     </div>
-                    <button className="hover:text-white transition-colors">
+                    <button className="hover:text-white hover:scale-105 transition-all duration-200 group-hover:text-red-400">
                       <i className="fa-solid fa-share-nodes mr-1"></i> Share
                     </button>
                   </div>
                 </div>
               </div>
-            ))}
+              ))
+            ) : (
+              <div className="col-span-full text-center py-12">
+                <i className="fa-solid fa-calendar-xmark text-6xl text-gray-600 mb-4"></i>
+                <h3 className="text-2xl font-bold text-gray-400 mb-2">No events found</h3>
+                <p className="text-gray-500">Try adjusting your search or filter criteria</p>
+              </div>
+            )}
           </div>
 
           {/* Load More Button */}
